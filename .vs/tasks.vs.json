@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-formula_gen",
+      "appliesTo": "formula_gen.py",
+      "type": "launch"
+    }
+  ]
+}
