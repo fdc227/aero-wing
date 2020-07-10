@@ -25,21 +25,26 @@ T_list, var = T_package[0], T_package[1]
 # print(T_list[1])
 # print(var)
 
+
 def lc_mt(i):
     term = T_list[i]
     out = linear_coeffs(term, *var_list)
     print(f'{i+1}/{len(T_list)} finished')
     return out
 
-p = Pool(THREAD_NUM)
-r = [r for r in range(len(T_list))]
-m_final = p.map(lc_mt, r)
 
-m_raw = open('matrix_from_lc_mt.pkl', 'wb')
-pickle.dump(m_final, m_raw)
+# m_raw = open('matrix_from_lc_mt.pkl', 'wb')
+# pickle.dump(m_final, m_raw)
 
-A, b = linear_eq_to_matrix(T_list, *var)
-mm_raw = open('matrix_from_letm.pkl', 'wb')
-m_package = [A, b]
-pickle.dump(m_package, mm_raw)
+# A, b = linear_eq_to_matrix(T_list, *var)
+# mm_raw = open('matrix_from_letm.pkl', 'wb')
+# m_package = [A, b]
+# pickle.dump(m_package, mm_raw)
 
+###  Windows specific ######
+
+if __name__ == "__main__":
+    p = Pool(THREAD_NUM)
+    r = [r for r in range(len(T_list))]
+    m_final = p.map(lc_mt, r)
+        

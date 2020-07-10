@@ -20,16 +20,29 @@ replace_dict = {**parameters, **twoD_param}
 
 mm_raw = open('matrix_from_letm.pkl', 'rb')
 MM = pickle.load(mm_raw)
+U_raw = open('U_final.pkl', 'rb')
+U = Matrix(pickle.load(U_raw))
+
 A, b = MM[0], MM[1]
 A_sym = A.xreplace(replace_dict)
 b_sym = b.xreplace(replace_dict)
+U_sym = U.xreplace(replace_dict)
+rhs = (b_sym - U_sym).tolist()
 
-
-print(A_sym)
-
-# A_inv_raw = open('A_inverse.pkl')
-# pickle.dump(A_, A_inv_raw)
-
-# U_raw = open('U_final.pkl', 'rb')
-# U = pickle.load(U_raw)
+# print(A_sym)
+# print(b_sym)
 # print(U)
+# print(rhs)
+
+def rhs_simplify(i):
+    print(f'simplifying {i+1}/{len(rhs)}')
+    out = simplify(rhs[i][0])
+    print(f'finished {i+1}/{len(rhs)}')
+    return out
+
+p = Pool(THREAD_NUM)
+r = [r for r in range(len(rhs))]
+rhs_s = p.map(rhs_simplify, r)
+
+A_raw = open('A_b_U.pkl', 'wb')
+pickle.dump([A_sym, b_sym, U_sym, rhs_s], A_raw)

@@ -128,6 +128,6 @@ T_final_raw = open('T_final_v2.pkl', 'wb')
 pickle.dump(T_package, T_final_raw)
 
 U_final_raw = open('U_final.pkl', 'wb')
-pickle.dump(U_ode_list, U_final_raw)
+pickle.dump(U_final, U_final_raw)
 
 
